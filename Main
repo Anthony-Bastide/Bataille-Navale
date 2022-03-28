@@ -1,0 +1,111 @@
+import java.util.Scanner;
+import java.util.Random;
+
+class Main {
+  public static void main(String[] args) throws InterruptedException {
+    Scanner sc = new Scanner(System.in);
+    Scanner sc1 = new Scanner(System.in);
+    int repLigneJoueur = 0;
+    int repColonneJoueur = 0;
+    int nombreRandomLigne;
+    int nombreRandomColonne;
+    int testUtilisateur = 0;
+    int testOrdinateur = 0;
+    int testTable;
+    int nombreCaseTable = 5;
+    int nombrePionToucherOrdi = 0;
+    int nombrePionToucherJoueur = 0;
+    int attaquerLigne;
+    int attaquerColonne;
+    int tirOrdinateurLigne;
+    int tirOrdinateurColonne;
+    int rejouer;
+    String reponseJoueur;
+    int tabJoueur[][] = new int[nombreCaseTable][nombreCaseTable];
+    int[][] tabOrdinateur = new int[nombreCaseTable][nombreCaseTable];
+    do {
+      rejouer = 0;
+      // etape 1: j'initialise les 2 table case par case à 0
+      for (int i1 = 0; i1 < nombreCaseTable; i1++) {
+        for (int i2 = 0; i2 < nombreCaseTable; i2++) {
+          tabJoueur[i1][i2] = 0;
+          tabOrdinateur[i1][i2] = 0;
+        }
+      }
+      // choix des emplacements des bateaux du joueur
+      // 2.4 et 3.4
+      for (int boucle = 1; boucle < nombreCaseTable + 1; boucle++) {
+        // 2.2.2
+        do {
+          testUtilisateur = 0;
+          // 2.1
+          System.out.println("quelle ligne voulez vous pour le pion " + boucle);
+          repLigneJoueur = sc.nextInt();
+          // 2.2.1
+          System.out.println("quelle colonne voulez vous pour le pion " + boucle);
+          repColonneJoueur = sc.nextInt();
+          if (repLigneJoueur <= nombreCaseTable & repColonneJoueur <= nombreCaseTable) {
+            testUtilisateur = tabJoueur[repLigneJoueur - 1][repColonneJoueur - 1];
+          } else {
+            testUtilisateur = 1;
+          }
+        } while (testUtilisateur != 0);
+        // 2.3
+        tabJoueur[repLigneJoueur - 1][repColonneJoueur - 1] = 1;
+        // choix des emplacements des bateaux d l'ordinateur
+        // 3.2.2
+        do { 
+          testOrdinateur = 0;
+          // 3.1
+          nombreRandomLigne = (int) (Math.random() * (5));
+          // 3.2.1
+          nombreRandomColonne = (int) (Math.random() * (5));
+          if (nombreRandomLigne <= nombreCaseTable & repColonneJoueur <= nombreCaseTable) {
+            testOrdinateur = tabOrdinateur[nombreRandomLigne][nombreRandomColonne];
+          } else {
+            testOrdinateur = 1;
+          }
+        } while (testOrdinateur != 0);
+        tabOrdinateur[nombreRandomLigne][nombreRandomColonne] = 1;
+      }
+      procedure.tabAffichage(tabJoueur, nombreCaseTable);
+
+      // phase de jeu
+      while (nombrePionToucherJoueur < nombreCaseTable | nombrePionToucherOrdi < nombreCaseTable) {
+        System.out.println("A vous de jouer !");
+        do {
+          System.out.println("Quelle ligne voulez vous attaqué");
+          attaquerLigne = sc.nextInt();
+          System.out.println("Quelle colonne voulez vous attaqué");
+          attaquerColonne = sc.nextInt();
+        } while (attaquerLigne > nombreCaseTable | attaquerColonne > nombreCaseTable);
+        System.out.println("Tir en cours");
+        Thread.sleep(2000);
+        testTable = tabOrdinateur[attaquerLigne - 1][attaquerColonne - 1];
+        tabOrdinateur[attaquerLigne - 1][attaquerColonne - 1] = fonction.testTir(testTable);
+        if (testTable == 1) {
+          nombrePionToucherJoueur++;
+        }
+        procedure.tabAffichageCacher(tabOrdinateur, nombreCaseTable);
+        System.out.println("Tour de l'ordinateur");
+        tirOrdinateurLigne = (int) (Math.random() * (5));
+        tirOrdinateurColonne = (int) (Math.random() * (5));
+        System.out.println("Tir en cours");
+        Thread.sleep(2000);
+        testTable = tabOrdinateur[tirOrdinateurLigne][tirOrdinateurColonne];
+        tabJoueur[tirOrdinateurLigne][tirOrdinateurColonne] = fonction.testTir(testTable);
+        if (testTable == 1) {
+          nombrePionToucherOrdi++;
+        }
+        procedure.tabAffichageCacher(tabJoueur, nombreCaseTable);
+      }
+      do {
+        System.out.println("voulez vous rejouer o/n");
+        reponseJoueur = sc1.nextLine();
+        if (reponseJoueur.contains("n")) {
+          rejouer = 1;
+        }
+      } while (!reponseJoueur.contains("o") & !reponseJoueur.contains("n"));
+    } while (rejouer == 0);
+  }
+}
