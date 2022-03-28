@@ -1,0 +1,15 @@
+class fonction {
+  public static int testTir(int testTable) {
+    int returne=testTable;
+    if (testTable == 1) {
+      returne = 2;
+      System.out.println("Touché !");
+    } else if (testTable > 1) {
+      System.out.println("Tir à blanc!"); 
+    } else {
+      returne = 3;
+      System.out.println("raté !");
+    }
+    return returne;
+  }
+}
