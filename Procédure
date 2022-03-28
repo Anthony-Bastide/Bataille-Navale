@@ -1,0 +1,44 @@
+class procedure{
+  public static void tabAffichage(int[][] tabChoisi,int nombreCaseTable){
+    String affichage;
+    System.out.print("   ");
+    for(int i0=1; i0<nombreCaseTable+1;i0++){
+      System.out.print(i0+"  ");
+    }
+    System.out.println("");
+    for(int i = 0; i < nombreCaseTable;i++){
+      System.out.print(i+1+"  ");
+      for(int i1 = 0; i1 < nombreCaseTable;i1++){
+          if (tabChoisi[i][i1]==1){
+            affichage = "o";
+          }else{
+            affichage = "~";
+          }
+          System.out.print(affichage+"  ");
+      }
+      System.out.println("");
+    }
+  }
+  public static void tabAffichageCacher(int[][] tabChoisi,int nombreCaseTable){
+    String affichage;
+    System.out.print("   ");
+    for(int i0=1; i0<nombreCaseTable+1;i0++){
+      System.out.print(i0+"  ");
+    }
+    System.out.println("");
+    for(int i = 0; i < nombreCaseTable;i++){
+      System.out.print(i+1+"  ");
+      for(int i1 = 0; i1 < nombreCaseTable;i1++){
+        if (tabChoisi[i][i1]==2){
+          affichage = "o";
+        }else if (tabChoisi[i][i1]==3){
+          affichage = "x";
+        }else{
+          affichage = "?";
+        }
+        System.out.print(affichage+"  ");
+      }
+      System.out.println("");
+    }
+  }
+}
